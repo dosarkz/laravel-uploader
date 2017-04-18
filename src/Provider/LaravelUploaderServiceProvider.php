@@ -28,10 +28,8 @@ class LaravelUploaderServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
-
-        $this->app->bind('Image', 'Intervention\Image\Facades\Image' );
-
+        $this->app->register('Intervention\Image\ImageServiceProvider');
+        $this->app->bind('Image', 'Intervention\Image\Facades\Image');
 
         $this->app['laraveluploader'] = $this->app->share(function($app)
         {
