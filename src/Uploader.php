@@ -27,7 +27,7 @@ abstract class Uploader
     /**
      * @var
      */
-    protected $destination;
+    public $destination;
     /**
      * @var
      */
