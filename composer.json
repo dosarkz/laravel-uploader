@@ -1,0 +1,24 @@
+{
+    "name": "dosarkz/laravel-uploader",
+    "description": "Uploading Class for laravel 5",
+    "authors": [
+        {
+            "name": "Yezhan Ashenov",
+            "email": "ashenov.e@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "intervention/image": "^2.3"
+    },
+    "autoload": {
+        "classmap": [
+            "src/Facade",
+            "src/Config",
+            "src/Provider"
+        ],
+        "psr-4": {
+            "Dosarkz\\LaravelUploader\\": "src/"
+        }
+    }
+}
