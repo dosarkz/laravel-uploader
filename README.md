@@ -17,3 +17,9 @@ Dosarkz\LaravelUploader\Provider\LaravelUploaderServiceProvider::class
 'ImageUploader' => Dosarkz\LaravelUploader\Facade\LaravelUploaderFacade::class
   
 ```
+## Sample
+
+```
+$uploader = new ImageUploader($request->file('image'), 'images/places/');
+
+```
