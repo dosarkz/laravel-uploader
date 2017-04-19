@@ -20,6 +20,9 @@ Dosarkz\LaravelUploader\Provider\LaravelUploaderServiceProvider::class
 ## Sample
 
 ```
+use Dosarkz\LaravelUploader\ImageUploader;
+
+
 $uploader = new ImageUploader($request->file('image'), 'images/places/');
 
 ```
