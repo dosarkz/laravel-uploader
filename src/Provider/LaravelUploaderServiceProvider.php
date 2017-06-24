@@ -32,8 +32,7 @@ class LaravelUploaderServiceProvider extends ServiceProvider
         $this->app->bind('Image', 'Intervention\Image\Facades\Image');
 
 
-        $this->app['laraveluploader'] = $this->app->share(function($app)
-        {
+        $this->app->singleton('laraveluploader', function ($app) {
             return new ImageUploader();
         });
     }
