@@ -1,7 +1,6 @@
 <?php
 namespace Dosarkz\LaravelUploader;
-
-use UploadedFile;
+use Illuminate\Http\UploadedFile;
 
 abstract class Uploader
 {

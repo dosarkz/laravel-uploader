@@ -3,6 +3,7 @@ namespace Dosarkz\LaravelUploader;
 
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
+use Illuminate\Http\UploadedFile;
 
 /**
  * Class ImageUploader
@@ -41,7 +42,7 @@ class ImageUploader extends Uploader
     {
         $this->setUploadedFile($uploaded_file);
         $this->setDestination($destination);
-        $this->setThumb('thumb_' . $this->getFileName());
+
 
         $this->resize = $resize;
         $this->imageWidth = $imageWidth;
@@ -53,7 +54,6 @@ class ImageUploader extends Uploader
         {
             File::makeDirectory(public_path($this->destination), $mode = 0777, true);
         }
-
         parent::__construct();
     }
 
@@ -76,8 +76,9 @@ class ImageUploader extends Uploader
     /**
      *
      */
-    public function upload()
+    public function upload(UploadedFile $uploadedFile)
     {
+        $this->setThumb('thumb_'.$this->getFileName());
         $this->uploadImageFile($this->getFileName());
         $this->uploadImageThumb($this->getThumb());
     }
@@ -96,10 +97,10 @@ class ImageUploader extends Uploader
             return Image::make($this->getUploadedFile()->getRealPath())
                 ->resize($this->imageWidth, $this->imageHeight, function ($constraint) {
                     $constraint->aspectRatio();
-                })->save(public_path($this->getDestination() . $filename));
+                })->save(public_path($this->getDestination() .'/'. $filename));
         }else {
             return Image::make($this->getUploadedFile()->getRealPath())
-                ->save(public_path($this->getDestination() . $filename));
+                ->save(public_path($this->getDestination()  .'/'. $filename));
         }
     }
     /**
@@ -112,16 +113,15 @@ class ImageUploader extends Uploader
 
         if ($width > $this->thumbWidth)
         {
-            Image::make($this->getUploadedFile()->getRealPath())
-                ->resize($this->thumbWidth, $this->thumbHeight, function ($constraint) {
-                $constraint->aspectRatio();
-            })
-                ->save(public_path($this->getDestination() . $thumb));
+           return  Image::make($this->getUploadedFile()->getRealPath())
+               ->resize($this->thumbWidth, $this->thumbHeight, function ($constraint) {
+                   $constraint->aspectRatio();
+               })
+               ->save(public_path($this->getDestination() .'/'. $thumb));
         }else{
             return Image::make($this->getUploadedFile()->getRealPath())
                 ->save(public_path($this->getDestination() .'/'. $thumb));
         }
-        return $thumb;
     }
 
 }

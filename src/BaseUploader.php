@@ -30,6 +30,11 @@ class BaseUploader
     public static function image($uploading_file, $destination = null, $resize = false, $imageWidth = 800,
                                  $imageHeight = null, $thumbWidth = 200, $thumbHeight = null)
     {
+        if ($destination == null)
+        {
+            $destination = 'uploads/images';
+        }
+
         return new ImageUploader($uploading_file, $destination, $resize, $imageWidth, $imageHeight,
             $thumbWidth, $thumbHeight);
     }
