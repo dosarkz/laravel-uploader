@@ -1,5 +1,5 @@
 # laravel-uploader
-Laravel 5 file uploader with resizer http://image.intervention.io/
+Laravel 5 image and file uploader with resizer http://image.intervention.io/
 
 # Install 
 ```
@@ -14,15 +14,19 @@ Dosarkz\LaravelUploader\Provider\LaravelUploaderServiceProvider::class
 ## Alias
 
 ```
-'ImageUploader' => Dosarkz\LaravelUploader\Facade\LaravelUploaderFacade::class
+'Uploader' => Dosarkz\LaravelUploader\Facade\LaravelUploaderFacade::class
   
 ```
-## Sample
+## Sample uploading image
 
 ```
-use Dosarkz\LaravelUploader\ImageUploader;
-
-
-$uploader = new ImageUploader($request->file('image'), 'images/places/');
+  use Uploader;
+  
+  $image_uploader  = Uploader::image($request->file('avatar'));
+  $image = Image::create([
+      'name' => $image_uploader->getFileName(),
+      'thumb' => $image_uploader->getThumb(),
+      'path' => $image_uploader->getDestination(),
+  ]);
 
 ```
