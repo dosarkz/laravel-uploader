@@ -1,17 +1,10 @@
 <?php
 namespace Dosarkz\LaravelUploader;
 
-use Intervention\Image\Facades\Image;
+use UploadedFile;
 
 abstract class Uploader
 {
-    public function __construct()
-    {
-        $this->setFileName($this->generateFileName());
-        $this->setThumb($this->generateThumb());
-        $this->upload();
-    }
-
     /**
      * @var
      */
@@ -19,35 +12,20 @@ abstract class Uploader
     /**
      * @var
      */
-    protected $thumb;
-    /**
-     * @var
-     */
-    protected $image;
-    /**
-     * @var
-     */
     public $destination;
     /**
      * @var
      */
-    public $model;
+    public $uploaded_file;
+
     /**
-     * @var int
+     * Uploader constructor.
      */
-    public $imageHeight = null;
-    /**
-     * @var int
-     */
-    public $imageWidth = 1024;
-    /**
-     * @var int
-     */
-    public $thumbHeight = null;
-    /**
-     * @var int
-     */
-    public $thumbWidth = 385;
+    public function __construct()
+    {
+        $this->setFileName($this->generateFileName());
+        $this->upload($this->getUploadedFile());
+    }
 
     /**
      * @return mixed
@@ -66,19 +44,35 @@ abstract class Uploader
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getThumb()
+    public function getDestination()
     {
-        return $this->thumb;
+        return $this->destination;
     }
 
     /**
-     * @param $thumb
+     * @param mixed $destination
      */
-    public function setThumb($thumb)
+    public function setDestination($destination)
     {
-        $this->thumb = $thumb;
+        $this->destination = $destination;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUploadedFile()
+    {
+        return $this->uploaded_file;
+    }
+
+    /**
+     * @param mixed $uploaded_file
+     */
+    public function setUploadedFile($uploaded_file)
+    {
+        $this->uploaded_file = $uploaded_file;
     }
 
     /**
@@ -86,82 +80,15 @@ abstract class Uploader
      */
     public function generateFileName()
     {
-        return time() . '_' . rand(0,100) . '.' . $this->image->getClientOriginalExtension();
+        return time() . '_' . rand(0,100) . '.' . $this->uploaded_file->getClientOriginalExtension();
     }
 
     /**
-     * @return string
-     */
-    public function generateThumb()
-    {
-        return 'thumb_' . $this->getFileName();
-    }
-
-    public function upload()
-    {
-        if ($this->image->getClientOriginalExtension() == 'gif')
-        {
-            $this->uploadFile($this->getFileName());
-        }else{
-            $this->uploadImageFile($this->getFileName());
-            $this->uploadImageThumb($this->getThumb());
-        }
-    }
-
-    public function uploadFile($filename)
-    {
-        return $this->image->move(public_path($this->destination),  $filename);
-    }
-
-    /**
-     * @param $filename
-     * @param $resize
+     * @param UploadedFile $uploadedFile
      * @return mixed
      */
-    public function uploadImageFile($filename, $resize = true)
+    public function upload(UploadedFile $uploadedFile)
     {
-        if ($resize)
-        {
-            list($width, $height) = getimagesize($this->image->getRealPath());
-
-            if ($width > $this->imageWidth)
-            {
-                return Image::make($this->image->getRealPath())
-                    ->resize($this->imageWidth, $this->imageHeight, function ($constraint) {
-                        $constraint->aspectRatio();
-                    })->save(public_path($this->destination . $filename));
-            }else {
-                return Image::make($this->image->getRealPath())
-                    ->save(public_path($this->destination . $filename));
-            }
-        }else{
-            return Image::make($this->image->getRealPath())
-                ->save(public_path($this->destination . $filename));
-        }
-
+        return $uploadedFile->move(public_path($this->getDestination()),  $this->getFileName());
     }
-
-    /**
-     * @param $thumb
-     * @return mixed
-     */
-    public function uploadImageThumb($thumb)
-    {
-        list($width, $height) = getimagesize($this->image->getRealPath());
-
-        if ($width > $this->thumbWidth)
-        {
-            Image::make($this->image->getRealPath())->resize($this->thumbWidth, $this->thumbHeight, function ($constraint) {
-                $constraint->aspectRatio();
-            })
-                ->save(public_path($this->destination . $thumb));
-        }else{
-            return Image::make($this->image->getRealPath())
-                ->save(public_path($this->destination . $thumb));
-        }
-
-
-        return $thumb;
-    }
-
 }

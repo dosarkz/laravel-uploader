@@ -11,6 +11,6 @@ class LaravelUploaderFacade extends Facade {
      */
     protected static function getFacadeAccessor()
     {
-        return 'laraveluploader';
+        return 'uploader';
     }
 }
