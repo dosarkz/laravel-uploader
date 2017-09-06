@@ -18,11 +18,16 @@ Dosarkz\LaravelUploader\Provider\LaravelUploaderServiceProvider::class
   
 ```
 ## Sample image upload
-@destination - the path to the image, 'images/articles', string
-@resize - A parameter that determines to use compression or not. In the case of using need to fill one of the parameters the resolution of the image, true or false, boolean
-@imageWidth, @imageHeight - the parameters of the image in pixels, 100, numeric
-@thumbWidth, @thumbHeight - the parameters of the thumbnail in pixels, 100, numeric
+
+
 ##### Uploader::image(uploaded_file, destination, resize, imageWidth, imageHeight, thumbWidth, thumbHeight)
+
+- @uploaded_file - instance of UploadedFile
+- @destination - the path to the image, 'images/articles', string
+- @resize - A parameter that determines to use compression or not. In the case of using need to fill one of the parameters the resolution of the image, true or false, boolean
+- @imageWidth, @imageHeight - the parameters of the image in pixels, 100, numeric
+- @thumbWidth, @thumbHeight - the parameters of the thumbnail in pixels, 100, numeric
+
 ```
   use Uploader;
   
@@ -36,8 +41,10 @@ Dosarkz\LaravelUploader\Provider\LaravelUploaderServiceProvider::class
 ```
 
 ## Sample file upload
-##### Uploader::file(uploaded_file, destination)
 
+##### Uploader::file(uploaded_file, destination)
+- @uploaded_file - instance of UploadedFile
+- @destination - the path to the image, 'images/articles', string
 ```
 use Uploader;
   
