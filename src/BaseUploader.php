@@ -14,6 +14,11 @@ class BaseUploader
      */
     public static function file($uploading_file, $destination = null)
     {
+        if ($destination == null)
+        {
+            $destination = 'uploads/files';
+        }
+
         return new FileUploader($uploading_file, $destination);
     }
 
