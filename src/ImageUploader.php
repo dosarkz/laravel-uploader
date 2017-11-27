@@ -92,15 +92,16 @@ class ImageUploader extends Uploader
     {
         list($width, $height) = getimagesize($this->getUploadedFile()->getRealPath());
 
+        $img = Image::make($this->getUploadedFile()->getRealPath());
+        $img->orientate();
+
         if ($width > $this->imageWidth)
         {
-            return Image::make($this->getUploadedFile()->getRealPath())
-                ->resize($this->imageWidth, $this->imageHeight, function ($constraint) {
-                    $constraint->aspectRatio();
-                })->save(public_path($this->getDestination() .'/'. $filename));
+            return $img->resize($this->imageWidth, $this->imageHeight, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save(public_path($this->getDestination() .'/'. $filename));
         }else {
-            return Image::make($this->getUploadedFile()->getRealPath())
-                ->save(public_path($this->getDestination()  .'/'. $filename));
+            return $img->save(public_path($this->getDestination()  .'/'. $filename));
         }
     }
     /**
@@ -111,16 +112,17 @@ class ImageUploader extends Uploader
     {
         list($width, $height) = getimagesize($this->getUploadedFile()->getRealPath());
 
+        $img = Image::make($this->getUploadedFile()->getRealPath());
+        $img->orientate();
+
         if ($width > $this->thumbWidth)
         {
-           return  Image::make($this->getUploadedFile()->getRealPath())
-               ->resize($this->thumbWidth, $this->thumbHeight, function ($constraint) {
-                   $constraint->aspectRatio();
-               })
-               ->save(public_path($this->getDestination() .'/'. $thumb));
-        }else{
-            return Image::make($this->getUploadedFile()->getRealPath())
+            return  $img->resize($this->thumbWidth, $this->thumbHeight, function ($constraint) {
+                $constraint->aspectRatio();
+            })
                 ->save(public_path($this->getDestination() .'/'. $thumb));
+        }else{
+            return $img->save(public_path($this->getDestination() .'/'. $thumb));
         }
     }
 
