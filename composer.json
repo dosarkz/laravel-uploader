@@ -20,5 +20,15 @@
         "psr-4": {
             "Dosarkz\\LaravelUploader\\": "src/"
         }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Dosarkz\\LaravelUploader\\Provider\\LaravelUploaderServiceProvider"
+            ],
+            "aliases": {
+                "Admin": "Dosarkz\\LaravelUploader\\Facade\\LaravelUploaderFacade"
+            }
+        }
     }
 }
