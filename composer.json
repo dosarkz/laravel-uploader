@@ -27,7 +27,7 @@
                 "Dosarkz\\LaravelUploader\\Provider\\LaravelUploaderServiceProvider"
             ],
             "aliases": {
-                "Admin": "Dosarkz\\LaravelUploader\\Facade\\LaravelUploaderFacade"
+                "Uploader": "Dosarkz\\LaravelUploader\\Facade\\LaravelUploaderFacade"
             }
         }
     }
